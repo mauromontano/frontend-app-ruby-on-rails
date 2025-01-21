@@ -1,0 +1,19 @@
+<p class="text-4xl font-bold text-center pb-4 mt-4">Popular Movies</p>
+
+<div data-controller="search">
+  <input type="text" data-search-target="input" class="p-2 border rounded" placeholder="Search movies..." data-action="input->search#search">
+  <div data-search-target="results" class="mt-4"></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <% @movies.each do |movie| %>
+    <%= turbo_frame_tag "movies_list", class: "p-4" do %>
+      <div class="bg-gray-800 p-4 rounded-lg text-white">
+        <h2 class="text-xl font-semibold"><%= movie["title"] %></h2>
+        <img src="https://image.tmdb.org/t/p/w500<%= movie['poster_path'] %>" alt="<%= movie['title'] %>" class="mt-4 rounded">
+        <p class="mt-2"><%= movie["overview"].truncate(100) %></p>
+        <a href="<%= movie_path(movie["id"]) %>" class="text-blue-400 mt-2 block">View Details</a>
+      </div>
+    <% end %>
+  <% end %>
+</div>

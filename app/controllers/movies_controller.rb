@@ -1,4 +1,4 @@
-require 'net/http'
+require "net/http"
 
 class MoviesController < ApplicationController
   BASE_URL = "https://api.themoviedb.org/3"
@@ -6,16 +6,17 @@ class MoviesController < ApplicationController
 
   def index
     query = params[:query]
+
     if query.present?
       url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
       response = Net::HTTP.get(URI(url))
       @movies = JSON.parse(response)["results"]
+      render partial: "movies_list"  # Turbo takes care of updating the view
     else
       url = "#{BASE_URL}/movie/popular?api_key=#{API_KEY}&language=en-US&page=1"
       response = Net::HTTP.get(URI(url))
       @movies = JSON.parse(response)["results"]
     end
-    render partial: "movies_list", layout: false
   end
 
   def show

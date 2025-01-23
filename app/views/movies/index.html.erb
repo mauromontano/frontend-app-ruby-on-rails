@@ -24,3 +24,33 @@
     <% end %>
   </div>
 </turbo-frame>
+
+<div class="w-full flex justify-center my-8">
+  <div class="flex justify-center items-center">
+    <button
+      data-action="click->search#prevPage"
+      class="px-4 py-2 mx-2 bg-gray-700 text-white rounded"
+      <%= "disabled" if @current_page == 1 %>
+    >
+      Prev
+    </button>
+
+    <span class="text-lg font-semibold my-2">Page <%= @current_page %> of <%= @total_pages %></span>
+
+    <select data-target="search.pageSelect" data-action="change->search#goToPage" class="p-2 mx-2 border rounded">
+      <% (1..@total_pages).each do |page| %>
+        <option value="<%= page %>" <%= "selected" if page == @current_page %>>
+          <%= page %>
+        </option>
+      <% end %>
+    </select>
+
+    <button
+      data-action="click->search#nextPage"
+      class="px-4 py-2 bg-gray-700 text-white rounded"
+      <%= "disabled" if @current_page == @total_pages %>
+    >
+      Next
+    </button>
+  </div>
+</div>

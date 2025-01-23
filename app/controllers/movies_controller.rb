@@ -9,13 +9,12 @@ class MoviesController < ApplicationController
     page = params[:page] || 1
 
     if query.present?
-      url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}"
+      url = "#{BASE_URL}/search/movie?api_key=#{API_KEY}&query=#{query}&page=#{page}"
       response = Net::HTTP.get(URI(url))
       @movies = JSON.parse(response)["results"]
       @total_pages = [JSON.parse(response)["total_pages"], 10].min
-      render partial: "movies_list"  # Turbo takes care of updating the view
     else
-      url = "#{BASE_URL}/movie/popular?api_key=#{API_KEY}&language=en-US&page=1"
+      url = "#{BASE_URL}/movie/popular?api_key=#{API_KEY}&language=en-US&page=#{page}"
       response = Net::HTTP.get(URI(url))
       @movies = JSON.parse(response)["results"]
       @total_pages = [JSON.parse(response)["total_pages"], 10].min

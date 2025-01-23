@@ -37,7 +37,7 @@
 
     <span class="text-lg font-semibold my-2">Page <%= @current_page %> of <%= @total_pages %></span>
 
-    <select data-target="search.pageSelect" data-action="change->search#goToPage" class="p-2 mx-2 border rounded">
+    <select data-controller="search" data-action="change->search#goToPage" class="p-2 mx-2 border rounded">
       <% (1..@total_pages).each do |page| %>
         <option value="<%= page %>" <%= "selected" if page == @current_page %>>
           <%= page %>
